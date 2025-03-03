@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iBon 售票系統 - 等候頁面</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            user-select: none;
+            color: #333;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #222;
+            white-space: nowrap;
+            border-bottom: 3px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .queue-info {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #555;
+            border-bottom: 2px solid #ccc;
+            width: 50%;
+            padding-bottom: 5px;
+        }
+
+        .logo-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            border: 2px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            width: 60%;
+        }
+
+        .logo-img {
+            width: 180px;
+            height: auto;
+        }
+
+        .lyrics {
+            max-width: 300px;
+            font-size: 1rem;
+            color: #777;
+            text-align: left;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .counter {
+            font-size: 1rem;
+            margin-top: 1em;
+            color: #5a5a5a;
+            border-top: 2px solid #ccc;
+            width: 40%;
+            padding-top: 5px;
+        }
+
+        .message {
+            font-size: 1rem;
+            color: #d9534f;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="title">iBon 售票系統 - 別急!衝刺中!</div>
+    <div class="queue-info">距離前方還有約 <span id="queueNum">1000</span> 人</div>
+    <div class="logo-container">
+        <img src="logo.png" alt="票務系統" class="logo-img" id="ticket">
+        <div>
+            <div class="lyrics" id="lyrics">你終究佔據了我的心房</div>
+            <div class="message" id="message">看得出來您很想要票了...系統努力中 !</div>
+        </div>
+    </div>
+    <div class="counter">想要指數：<span id="clickCount">0</span></div>
+    <p style="font-size: 0.9rem;">這邊幫您撥放一首慢慢等...來 ! 點我，讓系統知道你有多想要這張票！</p>
+</div>
+<script>
+    let count = 0;
+    let queueNum = 1000;
+    let lyricsIndex = 0;
+    let lyricsArray = [
+        "你終究佔據了我的心房", "我終於知道什麼叫做瘋狂", "因為你我不再怕黑暗", "想著你讓我更加勇敢",
+        "你說你害怕曾經受過的傷", "過去發生的情節讓你迷惘", "害怕重演 在妳身上", "卻步 讓你失去了方向",
+        "或許我沒資格說什麼（有誰不會害怕呢）", "但我知道我會願意等（妳相信我的時候）",
+        "我會慢慢等 慢慢等 慢慢等 慢慢等", "慢慢等 慢慢等 等上線 的鈴聲",
+        "慢慢等 等到我都睡著了 耐心等只為了心動那一刻", "慢慢等 慢慢等 慢慢等 慢慢等",
+        "慢慢等 慢慢等 等紅燈 變綠燈", "慢慢等 當你突然覺得冷 我會握著溫暖在 在這裡等著"
+    ];
+
+    document.getElementById('ticket').addEventListener('click', function() {
+        count++;
+        queueNum = Math.max(queueNum - Math.floor(Math.random() * 10), 1);
+        document.getElementById('clickCount').textContent = count;
+        document.getElementById('queueNum').textContent = queueNum;
+
+        lyricsIndex = (lyricsIndex + 1) % lyricsArray.length;
+        document.getElementById('lyrics').textContent = lyricsArray[lyricsIndex];
+
+        if (lyricsIndex === lyricsArray.length - 1) {
+            document.getElementById('message').style.display = 'block';
+        } else {
+            document.getElementById('message').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>
